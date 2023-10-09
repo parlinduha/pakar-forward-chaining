@@ -23,19 +23,12 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Hasil</th>
+                                        <th>Solusi Kerusakn</th>
                                         <th>Create</th>
-                                        <th>Update</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        <td>
-                                            <a href="" class="btn btn-sm btn-primary"><i class="fas fa fa-edit"></i></a>
-                                            <a href="" class="btn btn-sm btn-danger"><i class="fas fa fa-trash"></i></a>
-                                        </td>
-                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>

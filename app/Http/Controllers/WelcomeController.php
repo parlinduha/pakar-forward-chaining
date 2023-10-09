@@ -7,6 +7,7 @@ use App\Models\Gejala;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,27 +15,14 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $educations = Education::all();
-        $categoryCounts = [];
+        $categories = Education::select('category', DB::raw('MAX(video1) as video1'))
+            ->groupBy('category')
+            ->get();
 
-        foreach ($educations as $edu) {
-            $category = $edu->category;
-
-            if (!isset($categoryCounts[$category])) {
-                $categoryCounts[$category] = 1;
-            } else {
-                $categoryCounts[$category]++;
-            }
-        }
-
-        // Sort the categories by count in descending order
-        arsort($categoryCounts);
-
-        // Get the top 5 categories
-        $topCategories = array_slice($categoryCounts, 0, 5);
-
-        return view('frontend.index', compact('educations', 'topCategories'));
+        return view('frontend.index', compact('categories'));
     }
+
+
 
 
     public function diagnosa()

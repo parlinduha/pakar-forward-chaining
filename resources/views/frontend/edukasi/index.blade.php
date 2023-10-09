@@ -33,7 +33,6 @@
                     @empty
                         <p class="text-gray-500">No data available</p>
                     @endforelse
-                    <iframe class="w-full aspect-video ..." src="https://www.youtube.com/..."></iframe>
 
 
                 </div>

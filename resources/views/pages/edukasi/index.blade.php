@@ -116,10 +116,11 @@
             $(".video-link").click(function() {
                 var videoSrc = $(this).data("src");
                 var videoCategory = $(this).data("category");
+                var videoTitle = $(this).data("title"); // Get the video title
 
                 $("#videoPlayer source").attr("src", videoSrc);
                 $("#videoPlayer")[0].load();
-                $("#videoTitle").text(videoTitle);
+                $("#videoTitle").text(videoTitle); // Set the modal title to the video title
                 $("#videoCategory").text(videoCategory);
 
                 $("#videoModal").modal("show");

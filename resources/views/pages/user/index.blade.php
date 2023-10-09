@@ -22,7 +22,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
@@ -33,12 +33,13 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
-                                        <tr>
+                                        <tr class="text-center">
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->role }}</td>
                                             <td>
-                                                <img src="{{ url('storage/' . $user->image) }}" alt="User Image">
+                                                <img src="{{ url('storage/' . $user->image) }}" class="rounded-circle"
+                                                    width="50" height="50" alt="User Image">
                                             </td>
 
                                             <td>{{ $user->updated_at }}</td>
