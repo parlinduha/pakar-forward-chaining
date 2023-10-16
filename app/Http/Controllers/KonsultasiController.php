@@ -8,6 +8,9 @@ use App\Models\Knowlidge;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class KonsultasiController extends Controller
 {
@@ -17,15 +20,68 @@ class KonsultasiController extends Controller
         return view('pages.konsultasi.index', compact('gejalas'));
     }
 
+    public function exportPdf()
+    {
+        $user = Auth::user(); // Mendapatkan pengguna yang sedang login
+
+        $activity = Activity::where('causer_id', $user->id)
+            ->latest() // Mengambil aktivitas terbaru
+            ->first();  // Mengambil aktivitas terbaru yang paling pertama
+
+        if ($activity) {
+            $description = json_decode($activity->description, true);
+
+            if (isset($description['data'])) {
+                $formattedActivity = [
+                    'name' => $activity->causer->name,
+                    'email' => $activity->causer->email,
+                    'hasil' => $description['data']['name'],
+                    'solusi_kerusakan' => $description['data']['solusi'],
+                    'created_at' => $activity->created_at->format('Y-m-d H:i:s'),
+                    'selectedGejalaNames' => $description['selectedGejalaNames'] ?? null,
+
+                ];
+            } else {
+                $formattedActivity = null;
+            }
+        } else {
+            $formattedActivity = null;
+        }
+        // dd($formattedActivity);
+
+        $pdf = PDF::loadView('frontend.diagnosa.pdf', compact('formattedActivity'));
+
+        // Optionally, you can set PDF options, such as paper size and orientation
+        // $pdf->setPaper('A4', 'landscape');
+
+        // Return the PDF as a download
+        return $pdf->download('consultation_result.pdf');
+    }
+
     public function consult(Request $request)
     {
         $selectedGejalaIds = $request->input('gejala_id');
+
+        // Mengambil nama gejala berdasarkan ID
+        $selectedGejalaNames = Gejala::whereIn('id', $selectedGejalaIds)->pluck('name')->toArray();
+
         $data['possibleKerusakan'] = $this->forwardChaining($selectedGejalaIds);
 
+        $activityDescription = json_encode([
+            'message' => 'result',
+            'data' => $data['possibleKerusakan'],
+            'selectedGejalaNames' => $selectedGejalaNames, // Mengirim nama gejala ke tampilan
+        ]);
+
+        activity()->log($activityDescription);
 
 
-        // return view('pages.konsultasi.result', compact('data'));
-        return view('frontend.diagnosa.result', compact('data'));
+        // Menampilkan tampilan dengan data yang diperlukan
+        return view('frontend.diagnosa.result', [
+            'data' => $data,
+            'selectedGejalaNames' => $selectedGejalaNames,
+            'selectedGejalaIds' => $selectedGejalaIds,
+        ]);
     }
 
     private function forwardChaining($selectedGejalaIds)
@@ -64,6 +120,8 @@ class KonsultasiController extends Controller
 
         // Mengambil data Education yang terkait dengan Kerusakan
         $relatedEducation = $mostLikelyKerusakan->education;
+
+
 
         return [
             'name' => $mostLikelyKerusakan->name,

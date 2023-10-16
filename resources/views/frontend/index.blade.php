@@ -65,12 +65,14 @@
         <!-- Popular Categories -->
         <section class="mt-22 bg-[#F9FBFC]">
             <div class="mx-auto max-w-7xl px-4 lg:px-14 py-16">
-                <h3 class="text-2xl font-semibold">Categories</h3>
+                <a href="{{ route('edukasi.index') }}">
+                    <h3 class="text-2xl font-semibold">Katalog</h3>
+                </a>
                 <!-- Card -->
                 <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mt-10">
                     @foreach ($categories as $category)
                         <div class="video-container">
-                            <h2>{{ $category->category }}</h2>
+
                             <video
                                 class="bg-white  video rounded-xl mt-3 transition hover:ring-offset-2 hover:ring-2 hover:ring-[#0D63F3]">
                                 <source src="{{ asset('storage/videos/' . $category->video1) }}" type="video/mp4">
@@ -80,6 +82,7 @@
                                 <source src="{{ asset('storage/videos/' . $category->video5) }}" type="video/mp4">
                                 Maaf, browser Anda tidak mendukung tag video.
                             </video>
+                            <h2>{{ $category->category }}</h2>
                         </div>
                     @endforeach
                 </div>

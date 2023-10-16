@@ -6,11 +6,12 @@
             <!-- Detail Doctor -->
             <div class="lg:w-5/12  lg:border-r h-72 lg:h-[30rem] flex flex-col items-center justify-center text-center">
                 @php
-                    $userImage = Auth::user()->image;
-                    $photoPath = $userImage ? '/storage/app/public/' . $userImage : null;
-                    $defaultPhotoPath = asset('images/doctor-1.png');
-                    $fullPhotoPath = $photoPath && file_exists(storage_path($photoPath)) ? asset($photoPath) : $defaultPhotoPath;
+                    $userImagePath = 'storage/' . Auth::user()->image;
+                    // dd($userImagePath);
+                    $photoPath = url($userImagePath);
+                    $fullPhotoPath = $userImagePath ? $userImagePath : asset('images/doctor-1.png');
                 @endphp
+
 
                 <img src="{{ $fullPhotoPath }}" class="inline-block w-32 h-32 rounded-full bg-center object-cover object-top"
                     alt="user-image" />

@@ -6,7 +6,10 @@
 
                 <!-- Logo Brand -->
                 <a href="{{ route('welcome.index') }}" class="flex-shrink-0 flex items-center">
-                    <img class="h-12 lg:h-16 w-auto" src="{{ asset('images/logo.png') }}" alt="logo" />
+                    <img class="h-12 lg:h-16 w-auto" src="{{ asset('images/logo.png') }}" alt="logo" /><br>
+                    <div class="text-[#1E2B4F] text-sm">
+                        SDN PELA Mampang 03 Pagi Jakarta
+                    </div>
                 </a>
 
                 <!-- Navigation Menu -->
@@ -59,10 +62,12 @@
                                     </div>
                                 </div>
                                 @php
-                                    $userImage = Auth::user()->image;
-                                    $photoPath = $userImage ? '/storage/app/public/' . $userImage : null;
-                                    $defaultPhotoPath = asset('images/doctor-1.png');
-                                    $fullPhotoPath = $photoPath && file_exists(storage_path($photoPath)) ? asset($photoPath) : $defaultPhotoPath;
+                                    // $userImagePath = 'storage/' . Auth::user()->image;
+                                    // $photoPath = url($userImagePath);
+                                    // $fullPhotoPath = $userImagePath ? $userImagePath : asset('images/doctor-1.png');
+
+                                    $userImagePath = 'storage/' . Auth::user()->image;
+                                    $fullPhotoPath = url($userImagePath);
                                 @endphp
                                 <img class="h-12 w-12 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
                                     src="{{ $fullPhotoPath }}" alt="User Profile" />
@@ -170,10 +175,12 @@
                 <div @click="profileMobilenOpen = ! profileMobilenOpen" class="flex items-center px-4 cursor-pointer">
                     <div class="flex-shrink-0">
                         @php
-                            $userImage = Auth::user()->image;
-                            $photoPath = $userImage ? '/storage/app/public/' . $userImage : null;
-                            $defaultPhotoPath = asset('images/doctor-1.png');
-                            $fullPhotoPath = $photoPath && file_exists(storage_path($photoPath)) ? asset($photoPath) : $defaultPhotoPath;
+                            // $userImagePath = 'storage/' . Auth::user()->image;
+                            // $photoPath = url($userImagePath);
+                            // $fullPhotoPath = $userImagePath ? $userImagePath : asset('images/doctor-1.png');
+
+                            $userImagePath = 'storage/' . Auth::user()->image;
+                            $fullPhotoPath = url($userImagePath);
                         @endphp
                         <img class="h-10 w-10 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
                             src="{{ $fullPhotoPath }}" alt="" />

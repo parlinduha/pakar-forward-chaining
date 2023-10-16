@@ -5,11 +5,21 @@
         <div class="lg:max-w-7xl lg:flex items-center mx-auto px-4 lg:px-14 pt-6 py-20 lg:py-24 gap-x-24">
             <!-- Detail Doctor  -->
             <div class="lg:w-5/12  lg:border-r h-72 lg:h-[30rem] flex flex-col items-center justify-center text-center">
-                <img src="{{ asset('images/doctor-1.png') }}"
-                    class="inline-block w-32 h-32 rounded-full bg-center object-cover object-top" alt="doctor-1" />
+                @php
+                    // dd(Auth::user()->image);
+                    $userImagePath = 'storage/' . Auth::user()->image;
+                    $fullPhotoPath = url($userImagePath);
+                    // ...
+                @endphp
+
+
+
+                <img src="{{ $fullPhotoPath }}" class="inline-block w-32 h-32 rounded-full bg-center object-cover object-top"
+                    alt="user-image" />
                 <div class="text-[#1E2B4F] text-2xl font-semibold mt-4">
                     {{ Auth::user()->name }}
                 </div>
+
                 <div class="text-[#AFAEC3] mt-1"> {{ Auth::user()->role }}</div>
             </div>
 
@@ -55,7 +65,7 @@
                         <button type="submit"
                             class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Update</button>
                         <a href="{{ route('user.profile') }}"
-                            class="bg-[#2AB49B] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Cancel</a>
+                            class="bg-red rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Cancel</a>
                     </div>
                 </form>
             </div>

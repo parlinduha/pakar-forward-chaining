@@ -43,7 +43,7 @@
                         <button type="submit"
                             class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Update</button>
                         <a href="{{ route('user.profile') }}"
-                            class="bg-[#2AB49B] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Batal</a>
+                            class="bg-red rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Batal</a>
                     </div>
                 </form>
 

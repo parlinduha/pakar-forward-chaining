@@ -17,14 +17,19 @@
                 <!-- Form-->
                 <div class="px-4 lg:px-[91px] pt-10">
 
-                    <!-- Logo Brand -->
-                    <a href="{{ route('welcome.index') }}" class="flex-shrink-0 flex items-center">
-                        <img class="h-12 lg:h-16 w-auto" src="{{ asset('images/logo.png') }}" alt="Meet Doctor Logo" />
-                    </a>
+
 
                     <div class="flex flex-col justify-center py-14 h-screen lg:min-h-screen">
+                        <!-- Logo Brand -->
+                        <a href="{{ route('welcome.index') }}" class="flex-shrink-0 flex">
+                            <img class="h-12 lg:h-16 w-auto" src="{{ asset('images/logo.png') }}"
+                                alt="Meet Doctor Logo" />
+                        </a>
                         <h2 class="text-[#1E2B4F] text-2xl font-semibold leading-normal">
-                            Selamat Datang Kembali <br />
+                            Silahkan login untuk akses <br />
+                        </h2>
+                        <h2 class="text-[#1E2B4F] text-sm font-semibold leading-normal">
+                            sistem pakar kerusakan printer SDN PELA Mampang 03 Pagi Jakarta <br />
                         </h2>
                         <div class="mt-12">
 
@@ -61,7 +66,7 @@
                     <div class="flex flex-col justify-center h-full px-24 pt-10 pb-20">
                         <div class="relative">
                             <div class="relative top-0 -left-5 mb-7">
-                                <img src="{{ asset('images/bg.jpeg') }}" alt="" />
+                                <img src="{{ asset('images/bg2.jpg') }}" alt="" />
                             </div>
                         </div>
                     </div>

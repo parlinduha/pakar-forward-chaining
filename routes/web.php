@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/admin/profile', [DashboardController::class, 'profile'])->name('admin.profile');
+        Route::put('/admin/profile/image{id}', [DashboardController::class, 'img_profile'])->name('admin.imageProfile');
+        Route::put('/admin/profile/update{id}', [DashboardController::class, 'update_profile'])->name('admin.updateProfile');
+        Route::put('/admin/profile/password{id}', [DashboardController::class, 'update_password'])->name('admin.passwordProfile');
+
 
 
         Route::get('/gejala', [GejalaController::class, 'index'])->name('gejala.index');
@@ -73,20 +77,24 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edu/edit/{id}', [EducationController::class, 'edit'])->name('edu.edit');
         Route::put('/edu/update/{id}', [EducationController::class, 'update'])->name('edu.update');
         Route::delete('/edu/delete/{id}', [EducationController::class, 'destroy'])->name('edu.delete');
+
+        Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+        Route::get('/history/data', [HistoryController::class, 'getData'])->name('history.data');
+        Route::get('/history/pdf', [HistoryController::class, 'exportPDF'])->name('export.pdf');
     });
+    Route::group(['middleware' => ['role:user']], function () {
+        // Route::get('/konsultasi', [KonsultasiController::class, 'index'])->name('konsultasi.index');
+        Route::get('/diagnosa/export-pdf', [KonsultasiController::class, 'exportPdf'])->name('exportPdf');
+        Route::post('/konsultasi', [KonsultasiController::class, 'consult'])->name('konsultasi.consult');
 
-
-    Route::get('/konsultasi', [KonsultasiController::class, 'index'])->name('konsultasi.index');
-    Route::post('/konsultasi', [KonsultasiController::class, 'consult'])->name('konsultasi.consult');
-    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
-
-    Route::get('/about', [WelcomeController::class, 'about'])->name('about.index');
-    Route::get('/diagnosa', [WelcomeController::class, 'diagnosa'])->name('diagnosa.index');
-    Route::get('/edukasi', [WelcomeController::class, 'edukasi'])->name('edukasi.index');
-    Route::get('/profile', [WelcomeController::class, 'profile'])->name('user.profile');
-    Route::get('/profile/edit/{id}', [WelcomeController::class, 'edit_profile'])->name('edit.profile');
-    Route::put('/profile/edit/{id}', [WelcomeController::class, 'update_profile'])->name('update.profileUser');
-    Route::get('/profile/password', [WelcomeController::class, 'edit_password'])->name('edit.passwordUser');
-    Route::put('/profile/password/{id}', [WelcomeController::class, 'update_password'])->name('update.passwordUser');
+        Route::get('/about', [WelcomeController::class, 'about'])->name('about.index');
+        Route::get('/diagnosa', [WelcomeController::class, 'diagnosa'])->name('diagnosa.index');
+        Route::get('/edukasi', [WelcomeController::class, 'edukasi'])->name('edukasi.index');
+        Route::get('/profile', [WelcomeController::class, 'profile'])->name('user.profile');
+        Route::get('/profile/{id}', [WelcomeController::class, 'edit_profile'])->name('edit.profile');
+        Route::put('/profile/{id}', [WelcomeController::class, 'update_profile'])->name('update.profileUser');
+        Route::get('/profile/password', [WelcomeController::class, 'edit_password'])->name('edit.passwordUser');
+        Route::put('/profile/password/{id}', [WelcomeController::class, 'update_password'])->name('update.passwordUser');
+    });
 });
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');

@@ -1146,6 +1146,10 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(42 180 155 / var(--tw-bg-opacity));
 }
+.bg-red {
+    --tw-bg-opacity: 1;
+    background-color: rgb(225 29 72 / var(--tw-bg-opacity));
+}
 
 .bg-\[\#0D63F3\] {
   --tw-bg-opacity: 1;
@@ -1425,6 +1429,11 @@ body {
 .text-\[\#AFAEC3\] {
   --tw-text-opacity: 1;
   color: rgb(175 174 195 / var(--tw-text-opacity));
+}
+
+.text-red {
+    --tw-text-opacity: 1;
+    color: rgb(225 29 72 / var(--tw-text-opacity));
 }
 
 .text-white {

@@ -5,6 +5,7 @@
         <div class="max-w-7xl grid lg:grid-cols-12 mx-auto pt-14 lg:pt-20 pb-20 lg:pb-28 lg:divide-x px-4 lg:px-16">
             <!-- Detail Payment -->
             <div class="lg:col-span-7 lg:pl-8 lg:pr-20">
+                <h5 class="text-[#1E2B4F] text-2xl font-semibold">Hasil diagnosa anda</h5><br><br><br>
                 <!-- Doctor Information -->
                 <div class="flex flex-wrap items-center space-x-5">
                     <div class="flex-shrink-0">
@@ -104,19 +105,38 @@
                                     fill="#FFB340" />
                             </svg>
                         </div>
-                        <span class="text-[#1E2B4F] font-medium"> (12,495) </span>
                     </div>
                 </div>
 
                 <!-- Appoinment Information -->
                 <div class="mt-16">
-                    <h5 class="text-[#1E2B4F] text-lg font-semibold">Kemungkinan kerusakan</h5>
+                    <h5 class="text-[#4f1e1e] text-lg font-semibold">Gejala anda</h5>
                     <div class="flex items-center justify-between mt-5">
-                        <div class="text-[#AFAEC3] font-medium">{{ $data['possibleKerusakan']['name'] }}</div>
+                        <div class="text-[#AFAEC3] font-medium">
+                            <ol class="list-decimal">
+                                @php
+                                    $count = 1;
+                                @endphp
+                                @foreach ($selectedGejalaNames as $gejalaName)
+                                    <li>{{ $count }}. {{ $gejalaName }}</li>
+                                    @php
+                                        $count++;
+                                    @endphp
+                                @endforeach
+                            </ol>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Payment Information -->
+                <div class="mt-16">
+                    <h5 class="text-[#4f1e1e] text-lg font-semibold">Kemungkinan kerusakan</h5>
+                    <div class="flex items-center justify-between mt-5">
+                        <div class="text-red font-medium">{{ $data['possibleKerusakan']['name'] }}</div>
+                    </div>
+                </div>
+
+
+
                 <div class="mt-16">
                     <h5 class="text-[#1E2B4F] text-lg font-semibold">
                         Solusi
@@ -126,22 +146,17 @@
                         <div class="text-[#AFAEC3] font-medium"> {{ $data['possibleKerusakan']['solusi'] }}</div>
                     </div>
                 </div>
+
             </div>
 
-            <!-- Choose Payment -->
             <div class="lg:col-span-5 lg:pl-20 lg:pr-7 mt-10 lg:mt-0">
-                <h3 class="text-[#1E2B4F] text-3xl font-semibold leading-normal">
-                    Tutorial video
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-5 py-6">
+
+
+
+                {{-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-5 py-6">
                     @if ($data['possibleKerusakan']['education']['video1'])
                         <div
-                            class="w-full @if (
-                                !$data['possibleKerusakan']['education']['video2'] &&
-                                    !$data['possibleKerusakan']['education']['video3'] &&
-                                    !$data['possibleKerusakan']['education']['video4'] &&
-                                    !$data['possibleKerusakan']['education']['video5']
-                            ) sm:col-span-2 md:col-span-4 lg:col-span-2 @endif">
+                            class="w-full @if (!$data['possibleKerusakan']['education']['video2'] && !$data['possibleKerusakan']['education']['video3'] && !$data['possibleKerusakan']['education']['video4'] && !$data['possibleKerusakan']['education']['video5']) sm:col-span-2 md:col-span-4 lg:col-span-2 @endif">
                             <video id="tutorial-video"width="100%" height="auto" controls class="rounded-xl">
                                 <source
                                     src="{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video1']) }}"
@@ -194,51 +209,58 @@
                             </video>
                         </div>
                     @endif
+                </div> --}}
+                <div class="mt-10 grid">
+                    <a href="{{ route('exportPdf') }}" class="bg-red text-white px-10 py-3 rounded-full text-center"
+                        x-show="payment.length">
+                        Print PDF
+                    </a>
                 </div>
 
-
-                <div class="mt-10 grid">
+                <div class="mt-4 grid">
                     <a href="{{ route('diagnosa.index') }}"
                         class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center" x-show="payment.length">
                         Back Diagnosa
                     </a>
                 </div>
+
+
             </div>
         </div>
     </div>
     <!-- End Content -->
 @endsection
-    @section('scripts')
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                // Ambil elemen video
-                var video = document.getElementById("tutorial-video");
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Ambil elemen video
+            var video = document.getElementById("tutorial-video");
 
-                // Daftar video yang tersedia
-                var videoSources = [
-                    "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video1']) }}",
-                    "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video2']) }}",
-                    "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video3']) }}",
-                    "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video4']) }}",
-                    "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video5']) }}"
-                ];
+            // Daftar video yang tersedia
+            var videoSources = [
+                "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video1']) }}",
+                "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video2']) }}",
+                "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video3']) }}",
+                "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video4']) }}",
+                "{{ asset('storage/videos/' . $data['possibleKerusakan']['education']['video5']) }}"
+            ];
 
-                // Fungsi untuk mengganti video
-                function changeVideo(index) {
-                    video.src = videoSources[index];
-                    video.load(); // Muat ulang video
-                    video.play(); // Putar video secara otomatis
-                }
+            // Fungsi untuk mengganti video
+            function changeVideo(index) {
+                video.src = videoSources[index];
+                video.load(); // Muat ulang video
+                video.play(); // Putar video secara otomatis
+            }
 
-                // Panggil fungsi pertama kali
-                changeVideo(0);
+            // Panggil fungsi pertama kali
+            changeVideo(0);
 
-                // Mengganti video saat thumbnail di klik
-                $(".video-thumbnail").click(function() {
-                    var index = $(this).data("index");
-                    changeVideo(index);
-                });
+            // Mengganti video saat thumbnail di klik
+            $(".video-thumbnail").click(function() {
+                var index = $(this).data("index");
+                changeVideo(index);
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection
