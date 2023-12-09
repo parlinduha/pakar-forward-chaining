@@ -56,3 +56,7 @@ Install project to local:
   ````bash
   php artisan serve
   ````
+  - Copy di browser
+  ````bash
+  http://localhost:8000
+  ````
